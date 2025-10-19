@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Project Showcase</title>
+  <style>
+    :root { --max: 64rem; --accent:#0366d6; --muted:#6a6a6a; }
+    body { font-family: Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; margin:0; padding:2rem; display:flex; justify-content:center; }
+    main { max-width:var(--max); width:100%; }
+    header { margin-bottom:1.25rem; }
+    h1 { margin:0 0 .25rem 0; font-size:1.75rem; }
+    p.lead { margin:0 0 1rem 0; color:var(--muted); }
+    .cards { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:1rem; margin:1rem 0; }
+    .card { border:1px solid #e6e6e6; border-radius:8px; padding:1rem; background:#fff; box-shadow:0 1px 0 rgba(0,0,0,0.02); }
+    .card h2 { margin:0 0 .5rem 0; font-size:1.05rem; }
+    footer { color:var(--muted); font-size:0.9rem; margin-top:2rem; }
+    a.button { display:inline-block; padding:.35rem .6rem; background:var(--accent); color:white; text-decoration:none; border-radius:6px; font-weight:600; }
+  </style>
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Project Showcase</h1>
+      <p class="lead">A collection of project folders. Click a project to view details. Use the placeholder folder to add new projects.</p>
+      <a class="button" href="#projects">View projects</a>
+    </header>
+
+    <section id="projects" aria-labelledby="projects-heading">
+      <h2 style="margin-top:1.5rem">Projects</h2>
+      <div class="cards">
+        <article class="card">
+          <h2><a href="./ChildcareCostsDisparities/">Childcare Costs Disparities</a></h2>
+          <p class="muted">Data analysis exploring disparities in childcare costs.</p>
+        </article>
+
+        <article class="card">
+          <h2><a href="./DataFlowArchitecture/">Data Flow Architecture</a></h2>
+          <p class="muted">Architecture diagrams and notes for data processing pipelines.</p>
+        </article>
+
+        <article class="card">
+          <h2><a href="./RiskyVehicles/">Risky Vehicles</a></h2>
+          <p class="muted">Exploratory analysis on vehicles and risk factors.</p>
+        </article>
+
+        <article class="card">
+          <h2><a href="./NewProjectPlaceholder/">Add a new project</a></h2>
+          <p class="muted">Template and instructions for adding a new project folder.</p>
+        </article>
+      </div>
+    </section>
+
+    <footer>
+      <p>Site generated as a static HTML landing page for the repository. After merging the PR, enable GitHub Pages (Settings → Pages) selecting the main branch and the "" (root) folder.</p>
+    </footer>
+  </main>
+</body>
+</html>
