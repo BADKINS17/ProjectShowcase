@@ -1,11 +1,8 @@
 title: Project Showcase
-description: A portfolio of data science projects
-remote_theme: jekyll-theme-minimal
-
-plugins:
-  - jekyll-remote-theme
-
-markdown: kramdown
+description: A portfolio of 10 data science projects
+theme: jekyll-theme-primer
+url: "https://BADKINS17.github.io/ProjectShowcase"
+baseurl: ""            # since deploying from root of repo
 
 nav:
   - title: "Home"
