@@ -1,9 +1,11 @@
-title: "Project Showcase"
-theme: minimal-mistakes-jekyll
+title: Project Showcase
+description: A portfolio of data science projects
+remote_theme: mmistakes/minimal-mistakes
+
 plugins:
   - jekyll-remote-theme
 
-remote_theme: mmistakes/minimal-mistakes
+markdown: kramdown
 
 nav:
   - title: "Home"
