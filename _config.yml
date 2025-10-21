@@ -4,3 +4,14 @@ plugins:
   - jekyll-remote-theme
 
 remote_theme: mmistakes/minimal-mistakes
+
+nav:
+  - title: "Home"
+    url: /
+  - title: "Projects"
+    url: /projects/
+  - title: "About"
+    url: /about/
+  - title: "Contact"
+    url: /contact/
+
