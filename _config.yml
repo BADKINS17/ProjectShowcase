@@ -1,11 +1,6 @@
 title: Project Showcase
 description: A portfolio of data science projects
-remote_theme: mmistakes/minimal-mistakes
-
-plugins:
-  - jekyll-remote-theme
-
-markdown: kramdown
+theme: cayman
 
 nav:
   - title: "Home"
