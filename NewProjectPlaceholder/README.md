@@ -1,18 +1,16 @@
-# New Project Placeholder
+# Project: Coming Soon
 
-Use this folder as a template for creating new project folders.
+**Overview:**  
+This is a placeholder for an upcoming data science project. More details will be added soon.
 
-Template structure
-- index.md — A short project description (this file).
-- data/ — (optional) raw or processed datasets.
-- notebooks/ — Jupyter notebooks or analyses.
-- results/ — figures, exported tables, or model artifacts.
-- assets/ — images or diagrams.
+**Tools:** TBD
 
-How to add a new project
-1. Duplicate this folder and rename it to your project name.
-2. Update index.md with a summary and contributor info.
-3. Add your files into the appropriate subfolders.
-4. Optionally, open a PR to add the new project folder.
+**Files:**
 
-Example: `git mv NewProjectPlaceholder/ MyAwesomeProject/ && edit MyAwesomeProject/index.md`
+- `notebook.ipynb`: To be added.
+- `presentation.pptx`: To be added.
+- `dashboard.twbx`: To be added.
+- `report.docx`: To be added.
+
+**Summary:**  
+Stay tuned for new projects showcasing machine learning, data engineering, and visualization skills.
