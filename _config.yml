@@ -4,6 +4,11 @@ theme: jekyll-theme-primer
 url: "https://BADKINS17.github.io/ProjectShowcase"
 baseurl: ""            # since deploying from root of repo
 
+markdown: kramdown
+relative_links:
+  enabled: true
+
+
 nav:
   - title: "Home"
     url: /
