@@ -1,17 +1,15 @@
-Childcare Costs Disparities in the United States and the correlation to female employment rates 
+# Project: Childcare Costs Disparities in the United States
 
-* Powerpoint and Tableau workbook included to show how charts were made
+**Overview:**  
+Analyzed disparities in childcare costs across different U.S. regions and examined correlations with female labor force participation rates.
 
-# Project 1: Customer Segmentation Using K-Means
+**Tools:** Tableau, PowerPoint, U.S. Census Data
 
-**Overview**:  
-Performed clustering analysis on e-commerce customer data using K-Means to identify customer segments for targeted marketing.
+**Files:**
+- [`notebook.ipynb`](./notebook.ipynb): Jupyter notebook with EDA.
+- [`report.docx`](./report.docx): Written report.
+- [presentation.pptx](https://github.com/BADKINS17/ProjectShowcase/blob/main/ChildcareCostsDisparities/presentation.pptx): Visual walkthrough and key findings.
+- [dashboard.twbx](https://github.com/BADKINS17/ProjectShowcase/blob/main/ChildcareCostsDisparities/dashboard.twbx): Interactive Tableau dashboard.
 
-**Tools**: Python, scikit-learn, Tableau
-
-**Files**:
-- [`notebook.ipynb`](./notebook.ipynb): Jupyter notebook with EDA and clustering.
-- [`presentation.pptx`](./presentation.pptx): Summary of insights.
-- [`dashboard.twbx`](./dashboard.twbx): Interactive Tableau dashboard.
-- [`report.docx`](./report.docx): Formal written report.
-
+**Summary:**  
+This project uses public datasets to explore how the rising cost of childcare may impact women's employment rates. Data visualizations are included to support findings.
