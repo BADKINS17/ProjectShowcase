@@ -1,13 +1,15 @@
-# Data Flow Architecture
+# Project: Data Flow Architecture for Real-Time Analytics
 
-This page is the project index for the Data Flow Architecture folder.
+**Overview:**  
+Designed a scalable data pipeline architecture for real-time ingestion, processing, and visualization in a business intelligence context.
 
-Summary
-- Brief description: Diagrams, design notes, and example implementations for data pipelines.
+**Tools:** Python, Apache Kafka, SQL, Power BI
 
-How to contribute
-1. Add architecture diagrams (SVG/PNG) and README details.
-2. Add sample code in a subfolder (e.g., /scripts) and document the pipeline steps here.
+**Files:**
 
-Links
-- Repository folder: ../DataFlowArchitecture/
+- [PowerPoint Presentation](https://github.com/BADKINS17/ProjectShowcase/blob/main/DataFlowArchitecture/DataFlowArchitecture.pptx): Architecture overview and pipeline stages.
+- [Report](https://github.com/BADKINS17/ProjectShowcase/blob/main/DataFlowArchitecture/DataFlowArchitecture.docx): Detailed system design and rationale.
+- [Jupyter Notebook](https://github.com/BADKINS17/ProjectShowcase/blob/main/DataFlowArchitecture/DataFlowArchitecture.ipynb): Sample pipeline code (simulated data).
+
+**Summary:**  
+This project outlines an efficient architecture to process streaming data using modern tools, suitable for enterprise analytics and real-time dashboards.
