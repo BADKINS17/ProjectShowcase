@@ -1,13 +1,15 @@
-# Escalated Call Prediction
+# Project: Escalated Call Prediction with Machine Learning
 
-This page is the project index for the Escalated Call Prediction folder.
+**Overview:**  
+Built a predictive model to identify which customer service calls are likely to escalate, enabling proactive customer service.
 
-Summary
-- Brief description: Exploratory analysis and modeling of call escalation risk indicators.
+**Tools:** Python, scikit-learn, pandas, PowerPoint
 
-How to contribute
-1. Add notebooks or scripts and provide short descriptions here.
-2. Link to plots and datasets used for the analysis.
+**Files:**
 
-Links
-- Repository folder: ../EscalatedCallPrediction/
+- [Jupyter Notebook](https://github.com/BADKINS17/ProjectShowcase/blob/main/EscalatedCallPrediction/EscalatedCallPrediction.ipynb): Data preprocessing, model training, and evaluation.
+- [PowerPoint Presentation](https://github.com/BADKINS17/ProjectShowcase/blob/main/EscalatedCallPrediction/EscalatedCallPrediction.pptx): Summary of findings and model performance.
+- [Report](https://github.com/BADKINS17/ProjectShowcase/blob/main/EscalatedCallPrediction/EscalatedCallPrediction.docx): Formal report detailing approach and results.
+
+**Summary:**  
+This project demonstrates how classification models can be applied to customer support data to flag potentially high-risk cases and reduce churn.
