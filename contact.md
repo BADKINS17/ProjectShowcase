@@ -12,7 +12,7 @@ I'm always open to connecting with others in the data science, analytics, and te
 ## 📧 Contact Info
 
 - **Email**: [jojuana@msn.com](mailto:jojuana@msn.com)
-- **LinkedIn**: [linkedin.com/in/billie-adkins]([https://www.linkedin.com/in/billie-adkins-40b186384]))
+- **LinkedIn**: [linkedin.com/in/billie-adkins](https://www.linkedin.com/in/billie-adkins-40b186384)
 - **GitHub**: [github.com/BADKINS17](https://github.com/BADKINS17)
 
 ---
