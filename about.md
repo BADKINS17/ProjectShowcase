@@ -1,7 +1,6 @@
 ---
-layout: page
+layout: default
 title: "About"
-permalink: /about/
 ---
 
 Hi! I'm Billie Adkins, a data scientist passionate about turning data into actionable insights. 
