@@ -13,10 +13,10 @@ I have professional experience in the **credit card operations industry**, where
 
 ## 🎓 Education
 
-- **Master of Science in [Data Science]**  
+- **Master of Science in Data Science**  
   *Bellevue University* — *Graduated January 2026*
 
-- **Bachelor of Science in [Accounting]**  
+- **Bachelor of Science in Accounting**  
   *Franklin University*
 
 ---
