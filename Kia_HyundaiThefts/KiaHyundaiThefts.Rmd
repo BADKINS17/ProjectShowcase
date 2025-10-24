@@ -1,0 +1,408 @@
+---
+title: "Kia Hyundai Thefts"
+author: "Billie Adkins"
+date: "2025-04-20"
+output: pdf_document
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Import Libraries
+
+```{r}
+
+# Import libraries needed for chunk/assignment
+library(tidyverse)
+library(lubridate)
+library(janitor)
+library(readxl)
+library(ggmap)
+library(writexl)
+library(ggplot2)
+library(dplyr)
+library(treemap)
+library(treemapify)
+
+```
+
+## Read and clean city files related to car thefts
+
+```{r datareview, echo=FALSE}
+
+# File 1 Milwaukee, WI dataset
+file1 <- read_csv("KiaHyundaiMilwaukeeData.csv")
+
+# Capitalizes city, ensures date is formatted correctly, and assigns source column
+file1_clean <- file1 %>%
+  mutate(
+    city = str_to_title(city),
+    date = ym(paste(year, month)),
+    source = "Milwaukee"
+  ) %>%
+  select(date, city, state, countKiaHyundaiThefts, countOtherThefts, percentKiaHyundai, source)
+
+# File 3 All other cities dataset
+file3 <- read_csv("kiaHyundaiThefts.csv")
+
+# Capitalizes city, ensures date is formatted correctly, and assigns source column
+file3_clean <- file3 %>%
+  mutate(
+    city = str_to_title(city),
+    date = ym(paste(year, month)),
+    source = "KiaHyundaiThefts"
+  ) %>%
+  select(date, city, state, countKiaHyundaiThefts, countOtherThefts, percentKiaHyundai, source)
+
+```
+
+## Read and clean agency file and look up city/state with google API
+
+```{r}
+
+# File 2 Police Department/Agency dataset
+file2 <- read_csv("carTheftsMap.csv")
+
+# Assigns coords_all to unique latitude and longitude values from file2
+coords_all <- file2 %>%
+  filter(!is.na(latitude), !is.na(longitude)) %>%
+  distinct(latitude, longitude)
+
+# Searches for previously created file with list of city/state for previously searched latitudes and longitudes, geo_saved is either the list of unique values from the file or an empty list
+if (file.exists("geocode_results.xlsx")) {
+  geo_saved <- read_excel("geocode_results.xlsx") %>%
+    distinct(latitude, longitude, city, state)
+} else {
+  geo_saved <- tibble(latitude = numeric(), longitude = numeric(), city = character(), state = character())
+}
+
+# Assigns coords_new to new values of latitude and longitude that has not been searched before
+coords_new <- anti_join(coords_all, geo_saved, by = c("latitude", "longitude"))
+
+# Removed my personal google API key 
+register_google(key = "")
+
+# Assigns geo_new variable to hold the city/state after a reverse geocoding search using latitude and longitude
+geo_new <- coords_new %>%
+  mutate(
+    geocode_result = map2(latitude, longitude, ~ revgeocode(c(.y, .x), output = "all"))
+  ) %>%
+  mutate(
+    city = map_chr(geocode_result, ~ {
+      comp <- .x$results[[1]]$address_components
+      city_comp <- keep(comp, ~ "locality" %in% .x$types)
+      if (length(city_comp) > 0) city_comp[[1]]$long_name else NA_character_
+    }),
+    state = map_chr(geocode_result, ~ {
+      comp <- .x$results[[1]]$address_components
+      state_comp <- keep(comp, ~ "administrative_area_level_1" %in% .x$types)
+      if (length(state_comp) > 0) state_comp[[1]]$short_name else NA_character_
+    })
+  ) %>%
+  select(latitude, longitude, city, state)
+
+# Assigns geo_combined variable to combined previously searched coordinates and newly searched coordinates 
+geo_combined <- bind_rows(geo_saved, geo_new) %>%
+  distinct(latitude, longitude, .keep_all = TRUE)
+
+# Updates the Excel file with the newly combined list of coordinates
+write_xlsx(geo_combined, "geocode_results.xlsx")
+
+# Assigns file2_with_geo to file2 updated with the city/state for all searched coordinates
+file2_with_geo <- file2 %>%
+  left_join(geo_combined, by = c("latitude", "longitude"))
+
+# Ensures dates, columns are formatted correctly, fills in missing data with NA, pivots data to change from wide to long format and assigns source column
+file2_clean <- file2_with_geo %>%
+  clean_names() %>%
+  mutate(
+    # Ensure that non-numeric values are coerced to NA properly
+    count_car_thefts2019 = as.numeric(gsub("[^0-9.]", "", count_car_thefts2019)),
+    count_car_thefts2020 = as.numeric(gsub("[^0-9.]", "", count_car_thefts2020)),
+    count_car_thefts2021 = as.numeric(gsub("[^0-9.]", "", count_car_thefts2021)),
+    count_car_thefts2022 = as.numeric(gsub("[^0-9.]", "", count_car_thefts2022))
+  ) %>%
+  pivot_longer(
+    cols = starts_with("count_car_thefts"),
+    names_to = "year",
+    names_prefix = "count_car_thefts",
+    values_to = "total_thefts"
+  ) %>%
+  mutate(
+    year = as.numeric(year),
+    date = lubridate::ymd(paste0(year, "-01-01")),
+    countKiaHyundaiThefts = NA,
+    countOtherThefts = total_thefts,
+    percentKiaHyundai = NA,
+    source = "CarTheftsMap"
+  ) %>%
+  select(
+    date, geo_name, city, state, countKiaHyundaiThefts, 
+    countOtherThefts, percentKiaHyundai, source
+  )
+```
+
+## Read and clean VICE file
+
+```{r}
+
+# File 4 Monthly Car Theft Data for several cities
+file4_raw <- read_excel("Motherboard VICE News Kia Hyundai Theft Data.xlsx")
+
+# Changes first column name to date
+colnames(file4_raw)[1] <- "date"
+
+# Ensures date field is formatted correctly
+file4_raw <- file4_raw %>%
+  mutate(date = as.Date(date))
+
+# Assigns variables to hold column names from every 3 columns skipping the first date column
+city_columns <- names(file4_raw)[-1]
+city_triplets <- matrix(city_columns, ncol = 3, byrow = TRUE)
+
+# Assigns city_data_list variable to records of city, count of Kias, countof Others, and percent of Kias stolen to total
+city_data_list <- apply(city_triplets, 1, function(cols) {
+  city_col <- cols[1]
+  city_name <- city_col
+  df <- file4_raw %>%
+    select(date, all_of(cols)) %>%
+    rename(
+      countKiaHyundaiThefts = all_of(cols[1]),
+      countOtherThefts = all_of(cols[2]),
+      percentKiaHyundai = all_of(cols[3])
+    ) %>%
+    mutate(
+      city_raw = city_name,
+      source = "VICE"
+    )
+  return(df)
+})
+
+# Combines non-null records of cities and theft counts/percent to file4_clean variable
+file4_clean <- bind_rows(city_data_list) %>%
+  separate(city_raw, into = c("city", "state"), sep = ",\\s*", fill = "right") %>%
+  mutate(
+    city = str_trim(city),
+    state = str_trim(state),
+    countKiaHyundaiThefts = parse_number(countKiaHyundaiThefts), 
+    countOtherThefts = parse_number(countOtherThefts),  
+    percentKiaHyundai = parse_number(percentKiaHyundai)  
+  ) %>%
+  filter(!is.na(percentKiaHyundai)) %>%  
+  select(date, city, state, countKiaHyundaiThefts, countOtherThefts, percentKiaHyundai, source)
+# state should be looked up for cleaner dataset, but it's not necessary for assignment and charts
+
+```
+
+## Combines the 4 cleaned datasets
+
+```{r}
+
+# Combine all dataset records into one dataframe saved as the car_thefts variable
+car_thefts <- bind_rows(file1_clean, file2_clean, file3_clean, file4_clean)
+
+```
+
+## Creates charts to use in powerpoint
+
+```{r}
+
+# Assigns df variable to car_thefts variable (combined files for assignment)
+df <- car_thefts
+
+# Converts the date and extracts year and month and re-assigns to df variable
+df <- df %>%
+  mutate(date = as.Date(date),
+         year = year(date),
+         month = month(date, label = TRUE))
+
+
+# Assigns df1 to sum of all kias and all other cars stolen for pie chart
+df1 <- df %>%
+  summarise(KiaHyundai = sum(countKiaHyundaiThefts, na.rm = TRUE),
+            Other = sum(countOtherThefts, na.rm = TRUE)) %>%
+  pivot_longer(everything(), names_to = "Make", values_to = "Thefts")
+
+# Creates and Saves Pie Chart
+p1 <- ggplot(df1, aes(x = "", y = Thefts, fill = Make)) +
+  geom_col(width = 1) +
+  coord_polar("y") +
+  theme_void() +
+  labs(title = "Kia/Hyundai vs Other Vehicle Thefts") +
+  scale_fill_manual(values = c("KiaHyundai" = "blue4", "Other" = "darkred")) +
+  theme(legend.title = element_blank())
+
+ggsave("chart1_pie_kia_vs_others_car_thefts.png", plot = p1, width = 6, height = 4)
+# print(p1)
+
+# Creates and Saves Stacked Area Chart for Kias over time by State
+p2 <- df %>%
+  filter(!is.na(state)) %>%
+  group_by(date, state) %>%
+  summarise(Thefts = sum(countKiaHyundaiThefts), .groups = "drop") %>%
+  ggplot(aes(x = date, y = Thefts, fill = state)) +
+  geom_area() +
+  scale_fill_manual(values = c("WI" = "blue4", "IL" = "darkred")) +  
+  labs(title = "Kia/Hyundai Thefts Over Time by State", x = "Date", y = "Thefts") +
+  theme_minimal()
+
+ggsave("chart2_kia_area_by_state_car_thefts.png", plot = p2, width = 7, height = 4)
+# print(p2)
+
+
+
+# holds all distinct states
+all_states <- df %>%
+  filter(!is.na(state)) %>%
+  pull(state) %>%
+  unique()
+
+# Assigns colors to use based on state
+custom_palette <- setNames(rep("gray80", length(all_states)), all_states)
+custom_palette["WI"] <- "blue4"
+custom_palette["IL"] <- "darkred"
+
+# Creates and Saves Stacked Area Chart for all other cars over time by State
+p3 <- df %>%
+  filter(!is.na(state)) %>%
+  group_by(date, state) %>%
+  summarise(Thefts = sum(countKiaHyundaiThefts + countOtherThefts), .groups = "drop") %>%
+  ggplot(aes(x = date, y = Thefts, fill = state)) +
+  geom_area() +
+    scale_fill_manual(values = c("WI" = "blue4", "IL" = "darkred")) +
+  labs(
+    title = "All Car Thefts Over Time by State",
+    x = "Date", y = "Thefts"
+  ) +
+  theme_minimal()
+
+ggsave("chart3_all_thefts_area_by_state_car_thefts.png", plot = p3, width = 7, height = 4)
+# print(p3)
+
+# Holds sum of Kias thefts by city
+city_thefts <- df %>%
+  filter(!is.na(city) & !is.na(state)) %>%
+  group_by(city, state) %>%
+  summarise(Thefts = sum(countKiaHyundaiThefts, na.rm = TRUE), .groups = "drop")
+
+# Assigns colors based on state
+city_thefts <- city_thefts %>%
+  mutate(
+    color = case_when(
+      state == "WI" ~ "blue4",
+      state == "IL" ~ "darkred",
+      TRUE ~ scales::col_numeric(
+        palette = c("gray70", "gray20"),
+        domain = range(Thefts)
+      )(Thefts)
+    )
+  )
+
+# Creates and Saves Stacked Area Chart for all Kia thefts by city
+p4 <- ggplot(city_thefts, aes(
+  area = Thefts,
+  fill = color,
+  label = paste0(city, "\n", Thefts)
+)) +
+  geom_treemap() +
+  geom_treemap_text(colour = "white", place = "centre", grow = TRUE) +
+  scale_fill_identity() +  # use color values directly
+  labs(title = "Kia/Hyundai Thefts by City") +
+  theme(legend.position = "none")
+
+ggsave("chart4_treemap_cities_car_thefts.png", plot = p4, width = 7, height = 5)
+# print(p4)
+
+# Line Chart – % Kia/Hyundai Thefts Over Time by city
+
+# Top 5 cities by total Kia/Hyundai thefts
+top_cities <- df %>%
+  filter(!is.na(city)) %>%
+  group_by(city, state) %>%
+  summarise(total_thefts = sum(countKiaHyundaiThefts, na.rm = TRUE), .groups = "drop") %>%
+  arrange(desc(total_thefts)) %>%
+  slice(1:6)
+
+# Assigns plot_data variable for top 5 cities of kia thefts and looks up state to assign color
+plot_data <- df %>%
+  filter(city %in% top_cities$city) %>%
+  left_join(top_cities, by = c("city", "state")) %>%
+  mutate(
+    color = case_when(
+      state == "WI" ~ "blue4",
+      state == "IL" ~ "darkred",
+      TRUE ~ scales::col_numeric(
+        palette = c("gray70", "gray20"),
+        domain = range(total_thefts, na.rm = TRUE)
+      )(total_thefts)
+    )
+  )
+
+
+# Creates and Saves Line Chart for all kia thefts over time by city (top 5 only)
+p5 <- ggplot(plot_data, aes(x = date, y = percentKiaHyundai, group = city, color = city)) +
+  geom_line(size = 1.2) +
+  scale_color_manual(values = setNames(plot_data$color, plot_data$city)) +
+  labs(
+    title = "% of Thefts Involving Kia/Hyundai – Top 5 Cities",
+    x = "Date", y = "Percent"
+  ) +
+  scale_y_continuous(labels = scales::percent_format(accuracy = 1)) +
+  theme_minimal() +
+  theme(legend.title = element_blank())
+
+ggsave("chart5_top5_cities_percent_kiahyundai_car_thefts.png", plot = p5, width = 7, height = 4)
+# print(p5)
+
+# Stacked Bar Chart -- All Thefts by Year (Top 15 Police Department/Agencies)
+
+# Sums all thefts by department and assigns to df_dept
+df_dept <- df %>%
+  filter(!is.na(geo_name)) %>%
+  group_by(year, geo_name, state) %>%
+  summarise(Thefts = sum(countOtherThefts, na.rm = TRUE), .groups = "drop")
+
+# Top 15 departments by all thefts
+top15 <- df_dept %>%
+  group_by(geo_name, state) %>%
+  summarise(total = sum(Thefts), .groups = "drop") %>%
+  arrange(desc(total)) %>%
+  slice_head(n = 15)
+df_top15 <- df_dept %>%
+  filter(geo_name %in% top15$geo_name) %>%
+  left_join(top15, by = c("geo_name", "state"))
+
+# Assigns df_top15 variable for top 15 departments for all car thefts and assigns color based on agency 
+df_top15 <- df_top15 %>%
+  mutate(color = case_when(
+    geo_name == "Milwaukee PD" ~ "blue4",
+    geo_name == "Chicago PD" ~ "darkred",
+    TRUE ~ scales::col_numeric(
+      palette = c("gray70", "gray20"),
+      domain = range(total, na.rm = TRUE)
+    )(total)
+  ))
+
+# Creates and Saves Stacked Bar Chart for all car thefts by year (top 15 only)
+p6 <- ggplot(df_top15, aes(x = factor(year), y = Thefts, fill = geo_name)) +
+  geom_bar(stat = "identity", position = "stack") +
+  scale_fill_manual(values = setNames(df_top15$color, df_top15$geo_name)) +
+  labs(
+    title = "Top 15 Police Departments: Car Thefts by Year",
+    x = "Year", y = "Thefts"
+  ) +
+  theme_minimal() +
+  theme(legend.title = element_blank())
+
+ggsave("chart6_top15_depts_car_thefts.png", plot = p6, width = 7, height = 4)
+# print(p6)
+
+```
+
+
+
+
+
+
+
+
