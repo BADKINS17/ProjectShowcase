@@ -20,7 +20,7 @@ I'm always open to connecting with others in the data science, analytics, and te
 
 I'm particularly interested in:
 
-- SQL-based data engineering workflows (e.g., **Snowflake**, **Teradata**)
+- SQL-based data engineering workflows (e.g., **Snowflake**)
 - Projects in the **credit card operations**, **finance**, or **customer analytics** space
 - Data storytelling and dashboard design (especially in **Tableau**)
 
