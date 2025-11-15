@@ -6,8 +6,6 @@ Analyzed disparities in childcare costs across different U.S. regions and examin
 **Tools:** Tableau, PowerPoint, U.S. Census Data
 
 **Files:**
-- [Jupyter Notebook](./notebook.ipynb): Jupyter notebook with EDA.
-- [Report](./report.docx): Written report.
 - [PowerPoint Presentation](https://github.com/BADKINS17/ProjectShowcase/blob/main/ChildcareCostsDisparities/ChildcareCostsDisparities.pptx): Visual walkthrough and key findings.
 - [Tableau Workbook](https://github.com/BADKINS17/ProjectShowcase/blob/main/ChildcareCostsDisparities/ChildcareCostsDisparities.twbx): Interactive Tableau dashboard.
 
