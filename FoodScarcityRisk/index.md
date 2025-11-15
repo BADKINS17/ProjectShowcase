@@ -7,7 +7,7 @@ Food Scarcity Risk Prediction
 Python (Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn), Jupyter Notebook, PowerPoint, Word
 
 **Files:**  
-- [Jupyter Notebook]([./FoodScarcityRisk/](https://github.com/BADKINS17/ProjectShowcase/blob/main/FoodScarcityRisk/FoodScarcityPredictions.ipynb): Jupyter notebook containing data cleaning, exploratory analysis, feature engineering, and machine-learning model development.  
+- [Jupyter Notebook](https://github.com/BADKINS17/ProjectShowcase/blob/main/FoodScarcityRisk/FoodScarcityPredictions.ipynb): Jupyter notebook containing data cleaning, exploratory analysis, feature engineering, and machine-learning model development.  
 - [PowerPoint Presentation](https://github.com/BADKINS17/ProjectShowcase/blob/main/FoodScarcityRisk/FoodScarcityRisk.pptx): Slide deck summarizing project goals, insights, and modeling results for stakeholders.  
 - [Report](https://github.com/BADKINS17/ProjectShowcase/blob/main/FoodScarcityRisk/FoodScarcityRisk.docx): Comprehensive written report detailing methods, datasets, model performance, and policy implications.  
 - [Data Folder](https://github.com/BADKINS17/ProjectShowcase/tree/main/FoodScarcityRisk/data): Raw and processed datasets used for modeling and exploration.  
