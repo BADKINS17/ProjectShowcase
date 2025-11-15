@@ -1,4 +1,4 @@
-# Project: WhiteHouseVisitors
+# Project: White House Visitors
 
 **Overview:**  
 This project analyses visitor data for the White House, exploring who visits, when, and from where, with dynamic dashboards and insights into visitor flow and demographics.
