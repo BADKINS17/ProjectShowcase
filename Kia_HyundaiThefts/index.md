@@ -7,7 +7,7 @@ This project examines theft trends and vulnerabilities associated with certain v
 RStudio, PowerPoint, GitHub
 
 **Files:**  
-- [Kia_HyundaiThefts.Rmd](./KiaHyundaiThefts.Rmd): R Studio performing exploratory data analysis (EDA) of theft incidents.  
+- [Kia_HyundaiThefts.Rmd](https://github.com/BADKINS17/ProjectShowcase/blob/main/Kia_HyundaiThefts/KiaHyundaiThefts.Rmd): R Studio performing exploratory data analysis (EDA) of theft incidents.  
 - [Kia_HyundaiThefts.pptx](https://github.com/BADKINS17/ProjectShowcase/blob/main/Kia_HyundaiThefts/KiaHyundaiThefts.pptx): PowerPoint presentation visualizing key results and insights.  
 
 **Summary:**  
