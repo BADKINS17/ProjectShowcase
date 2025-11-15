@@ -1,6 +1,6 @@
 ---
 title: "Kia Hyundai Thefts"
-author: "Billie Adkins"
+author: ""
 date: "2025-04-20"
 output: pdf_document
 ---
