@@ -14,7 +14,7 @@ I have professional experience in the **credit card operations industry**, where
 ## 🎓 Education
 
 - **Master of Science in Data Science**  
-  *Bellevue University* — *Graduated January 2026*
+  *Bellevue University* — *November 2025*
 
 - **Bachelor of Science in Accounting**  
   *Franklin University*
@@ -27,7 +27,7 @@ I have professional experience in the **credit card operations industry**, where
 - **Programming**: Python (pandas, NumPy, scikit-learn), R  
 - **Data Engineering**: ETL development, data modeling, query optimization  
 - **Visualization**: Tableau dashboards, PowerPoint storytelling  
-- **Platforms**: Jupyter Notebook, GitHub
+- **Platforms**: Jupyter Notebook, RStudio, GitHub
 
 ---
 
