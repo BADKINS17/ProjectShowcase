@@ -14,5 +14,5 @@ Python (Pandas, NumPy, Scikit-learn, Matplotlib, Seaborn), Jupyter Notebook, Pow
 - [Figures Folder](https://github.com/BADKINS17/ProjectShowcase/tree/main/FoodScarcityRisk/figures): Visualizations generated during EDA and model evaluation.
 
 **Summary:**  
-Food scarcity is influenced by complex factors such as climate variability, supply chain constraints, population growth, and economic conditions. This project develops a predictive framework to quantify risk levels using publicly available datasets, including access to nutrional food and past SNAP participation indicators. The outcome is a Food Scarcity Risk Score that can help governmental agencies, communities, and researchers prioritize areas needing intervention. D
+Food scarcity is influenced by complex factors such as climate variability, supply chain constraints, population growth, and economic conditions. This project develops a predictive framework to quantify risk levels using publicly available datasets, including access to nutrional food and past SNAP participation indicators. The outcome is a Food Scarcity Risk Score that can help governmental agencies, communities, and researchers prioritize areas needing intervention.
 
