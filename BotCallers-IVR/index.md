@@ -7,7 +7,7 @@ Developed an Interactive Voice Response (IVR) system that automates inbound and 
 Python, Jupyter Notebook
 
 **Files:**  
-- [Jupyter Notebook](https://github.com/BADKINS17/ProjectShowcase/blob/main/BotCallers-IVR/BotCallers-IVR.ipynb): Jupyter notebook with exploratory data analysis (EDA) and system performance insights.  
+- [Jupyter Notebook](https://badkins17.github.io/ProjectShowcase/BotCallers-IVR/BotCallers-IVR.ipynb): Jupyter notebook with exploratory data analysis (EDA) and system performance insights.  
 
 **Summary:**  
 This project showcases the design and implementation of a scalable IVR system that automates voice interactions using programmable APIs. It analyzes call patterns, flow efficiency, and customer engagement through data visualizations and performance metrics. The notebook provides exploratory analysis of call data and insights into user behavior and call routing effectiveness.
